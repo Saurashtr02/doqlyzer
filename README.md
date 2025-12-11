@@ -1,72 +1,51 @@
-# DoHlyzer
-Set of tools to capture HTTPS traffic, extract statistical and time-series features from it, and analyze them with 
-a focus on detecting and characterizing DoH (DNS-over-HTTPS) traffic. 
+# DoQlyzer
+**DoQlyzer** is a specialized fork of the original [DoHLyzer](https://github.com/ahlashkari/DoHLyzer) tool, engineered to support **DNS over QUIC (DoQ)** traffic analysis. It captures network traffic, extracts statistical and time-series features, and is optimized for generating high-quality datasets for machine learning.
 
-## Acknowledgement
+## Key Features & Modifications
 
-This project has been made possible through funding from the Canadian Internet Registration Authority (CIRA) fron July 2019 to Jyly 2020.
+### 1. DNS over QUIC (DoQ) Support
+*   **Protocol Support**: Modified to parse **UDP port 853** traffic (standard DoQ port) instead of just TCP/443.
+*   **QUIC Parsing**: Disabled strict TLS layer checks to allow processing of raw QUIC/UDP packets as valid flows.
 
-## Modules
+### 2. Enhanced Flow Aggregation
+We introduced new arguments to give you precise control over how flows are split, which is critical for generating large datasets from limited capture files.
 
-DoHlyzer currently consists of several independent modules, each carrying some of the functionality needed to analyze
-the data for DoH flows.
+*   **`--max-packets N`**: Splits a long flow into multiple smaller flows, each containing `N` packets.
+    *   *Use Case*: Generating 100,000+ samples for Deep Learning from a few long tunneling sessions.
+*   **`--duration T`**: Splits flows based on a time duration `T` (in seconds).
 
-### Meter
-DoHMeter module is responsible for:
+### 3. Modern Compatibility
+*   **Scapy 2.6+ Support**: Patched `packet_time.py` and `response_time.py` to handle `Decimal` timestamp objects, preventing crashes on modern Python environments.
 
-1. Capturing HTTPS packets from network interfaces or reading input PCAP files
-2. Grouping packets into flows by their source and destination addresses and ports
-3. Extracting features for traffic analysis, including statistical and time-series features  
+## Installation
 
-### Analyzer
-This module can be used to create the proposed DNN models and benchmark them against the aggregated clumps file that can be created by the Meter module.
+1.  Clone the repository:
+    ```bash
+    git clone https://github.com/YOUR_USERNAME/doqlyzer.git
+    cd doqlyzer
+    ```
+2.  Install dependencies:
+    ```bash
+    pip install -r requirements.txt
+    ```
 
+## Usage
 
-### Visualizer
-This module can be used to visualize the clumps files created by the Meter module.
+### Basic Feature Extraction
+To extract features from a PCAP file containing DoQ traffic:
 
-## Prerequisites
-
-Python packages needed for running DoHlyzer are listed in `requirements.txt` file. You can install them 
-(preferably in virtualenv) by:
+```bash
+python3 meter/dohlyzer.py -f /path/to/capture.pcap -c /path/to/output.csv
 ```
-pip install -r requirements.txt
+
+### Advanced Usage (Dataset Generation)
+To generate a robust dataset by splitting flows into 5-packet chunks:
+
+```bash
+python3 meter/dohlyzer.py -f capture.pcap -c output.csv --max-packets 5
 ```
 
-## Deployment
-
-Each of the modules come with their own README files to describe how they can be used.
-
-## Contributing
-
-The project is not currently in development but any contribution is welcome in form of pull requests.
-
-## Copyright (c) 2020 
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (DoHLyzer), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
- 
-For citation in your works and also understanding DoHLyzer completely, you can find below published paper:
-
-"Detection of DoH Tunnels using Time-series Classification of Encrypted Traffic", Mohammadreza MontazeriShatoori, Logan Davidson, Gurdip Kaur and Arash Habibi Lashkari, The 5th Cyber Science and Technology Congress (2020) (CyberSciTech 2020), Vancouver, Canada, August 2020
-```
-@INPROCEEDINGS{9251211,
-  author={MontazeriShatoori, Mohammadreza and Davidson, Logan and Kaur, Gurdip and Habibi Lashkari, Arash},
-  booktitle={2020 IEEE Intl Conf on Dependable, Autonomic and Secure Computing, Intl Conf on Pervasive Intelligence and Computing, Intl Conf on Cloud and Big Data Computing, Intl Conf on Cyber Science and Technology Congress (DASC/PiCom/CBDCom/CyberSciTech)}, 
-  title={Detection of DoH Tunnels using Time-series Classification of Encrypted Traffic}, 
-  year={2020},
-  volume={},
-  number={},
-  pages={63-70},
-  doi={10.1109/DASC-PICom-CBDCom-CyberSciTech49142.2020.00026}}
-  ```
-
-## Project Team members
-
-* [**Arash Habibi Lashkari:**](http://ahlashkari.com/index.asp) Founder and Project Leader
-* [**Mohammadreza MontazeriShatoori:**](https://github.com/mr-montazeri) Research and Development
-* [**Gurdip Kaur:**](https://www.linkedin.com/in/gurdip-kaur-738062164/) Research
-* [**Logan Davidson:**](https://github.com/ladavids) Development
+## Original Acknowledgement
+This project is based on **DoHLyzer** by the Canadian Institute for Cybersecurity (CIC).
+*   **Original Paper**: "Detection of DoH Tunnels using Time-series Classification of Encrypted Traffic", MontazeriShatoori et al. (2020).
+*   **Original Repo**: [https://github.com/ahlashkari/DoHLyzer](https://github.com/ahlashkari/DoHLyzer)
