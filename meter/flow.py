@@ -92,7 +92,7 @@ class Flow:
             'ResponseTimeTimeSkewFromMode': response.get_skew2(),
             'ResponseTimeTimeCoefficientofVariation': response.get_cov(),
 
-            'DoH': self.is_doh(),
+            'DoQ': self.is_doq(),
         }
 
         return data
@@ -112,8 +112,8 @@ class Flow:
         if self.start_timestamp == 0:
             self.start_timestamp = float(packet.time)
 
-    def is_doh(self) -> bool:
-        return self.src_ip in constants.DOH_IPS or self.dest_ip in constants.DOH_IPS
+    def is_doq(self) -> bool:
+        return self.src_ip in constants.DOQ_IPS or self.dest_ip in constants.DOQ_IPS
 
     @property
     def duration(self):

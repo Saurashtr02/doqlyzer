@@ -21,7 +21,7 @@ We introduced new arguments to give you precise control over how flows are split
 
 1.  Clone the repository:
     ```bash
-    git clone https://github.com/YOUR_USERNAME/doqlyzer.git
+    git clone https://github.com/Saurashtr02/doqlyzer.git
     cd doqlyzer
     ```
 2.  Install dependencies:
@@ -42,7 +42,7 @@ python3 meter/dohlyzer.py -f /path/to/capture.pcap -c /path/to/output.csv
 To generate a robust dataset by splitting flows into 5-packet chunks:
 
 ```bash
-python3 meter/dohlyzer.py -f capture.pcap -c output.csv --max-packets 5
+python3 meter/doqlyzer.py -f capture.pcap -c output.csv --max-packets 5
 ```
 
 ## Original Acknowledgement
