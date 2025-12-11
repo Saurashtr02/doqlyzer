@@ -12,12 +12,13 @@ def create_sniffer(input_file, input_interface, output_mode, output_file, port, 
     assert (input_file is None) ^ (input_interface is None)
 
     NewFlowSession = generate_session_class(output_mode, output_file, duration, max_packets)
+    session_instance = NewFlowSession()
 
     if input_file is not None:
-        return AsyncSniffer(offline=input_file, filter=f'udp port {port}', prn=None, session=NewFlowSession, store=False)
+        return AsyncSniffer(offline=input_file, filter=f'udp port {port}', prn=None, session=session_instance, store=False), session_instance
     else:
         return AsyncSniffer(iface=input_interface, filter=f'udp port {port}', prn=None,
-                            session=NewFlowSession, store=False)
+                            session=session_instance, store=False), session_instance
 
 
 def main():
@@ -43,7 +44,7 @@ def main():
 
     load_layer('tls')
 
-    sniffer = create_sniffer(args.input_file, args.input_interface, args.output_mode, args.output, args.port, args.duration, args.max_packets)
+    sniffer, session = create_sniffer(args.input_file, args.input_interface, args.output_mode, args.output, args.port, args.duration, args.max_packets)
     sniffer.start()
 
     try:
@@ -52,9 +53,8 @@ def main():
         sniffer.stop()
     finally:
         sniffer.join()
-        if hasattr(sniffer, '_sniffer') and hasattr(sniffer._sniffer, 'session'):
-            if hasattr(sniffer._sniffer.session, 'garbage_collect'):
-                sniffer._sniffer.session.garbage_collect(None)
+        if hasattr(session, 'garbage_collect'):
+            session.garbage_collect(None)
 
 
 if __name__ == '__main__':
