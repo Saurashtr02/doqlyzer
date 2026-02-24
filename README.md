@@ -35,7 +35,7 @@ We introduced new arguments to give you precise control over how flows are split
 To extract features from a PCAP file containing DoQ traffic:
 
 ```bash
-python3 meter/dohlyzer.py -f /path/to/capture.pcap -c /path/to/output.csv
+python3 meter/doqlyzer.py -f /path/to/capture.pcap -c /path/to/output.csv
 ```
 
 ### Advanced Usage (Dataset Generation)
