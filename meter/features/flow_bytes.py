@@ -23,7 +23,7 @@ class FlowBytes:
         return direction_list
 
     def get_bytes_sent(self) -> int:
-        """Calculates the amount bytes sent from the machine being used to run DoQlyzer.
+        """Calculates the amount bytes sent from the machine being used to run DoQxtract.
 
         Returns:
             int: The amount of bytes.

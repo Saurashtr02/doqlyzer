@@ -61,11 +61,11 @@ def load_dataset(dir_path, segment_size, use_cache=True):
         print('Using cached version')
         return pickle.load(open(cache_path, 'rb'))
 
-    doh_dataset = load_json(os.path.join(dir_path, 'doh.json.gz'), 1, segment_size)
-    ndoh_dataset = load_json(os.path.join(dir_path, 'ndoh.json.gz'), 0, segment_size, max_count=len(doh_dataset[0]))
+    doq_dataset = load_json(os.path.join(dir_path, 'doq.json.gz'), 1, segment_size)
+    ndoq_dataset = load_json(os.path.join(dir_path, 'ndoq.json.gz'), 0, segment_size, max_count=len(doq_dataset[0]))
 
     logging.info('Combining datasets')
-    main_dataset = utils.combine(doh_dataset, ndoh_dataset)
+    main_dataset = utils.combine(doq_dataset, ndoq_dataset)
 
     logging.info('Splitting test/train')
     dataset_tuple = train_test_split(*main_dataset)

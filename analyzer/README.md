@@ -1,4 +1,4 @@
-# DoH Analyzer
+# DoQxtract Analyzer
 This module uses the aggregated json files that contain clumps sequences to create DNN models.
 4 models are created and benchmarked using the data. The results from the models are written in a JSON file.
 

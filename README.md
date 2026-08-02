@@ -1,5 +1,5 @@
-# DoQlyzer
-**DoQlyzer** is a specialized fork of the original [DoHLyzer](https://github.com/ahlashkari/DoHLyzer) tool, engineered to support **DNS over QUIC (DoQ)** traffic analysis. It captures network traffic, extracts statistical and time-series features, and is optimized for generating high-quality datasets for machine learning.
+# DoQxtract
+**DoQxtract** is a specialized fork of the original [DoHLyzer](https://github.com/ahlashkari/DoHLyzer) tool, engineered to support **DNS over QUIC (DoQ)** traffic analysis. It captures network traffic, extracts statistical and time-series features, and is optimized for generating high-quality datasets for machine learning.
 
 ## Key Features & Modifications
 
@@ -21,8 +21,8 @@ We introduced new arguments to give you precise control over how flows are split
 
 1.  Clone the repository:
     ```bash
-    git clone https://github.com/Saurashtr02/doqlyzer.git
-    cd doqlyzer
+    git clone https://github.com/Saurashtr02/DoQxtract.git
+    cd DoQxtract
     ```
 2.  Install dependencies:
     ```bash
@@ -35,14 +35,14 @@ We introduced new arguments to give you precise control over how flows are split
 To extract features from a PCAP file containing DoQ traffic:
 
 ```bash
-python3 meter/doqlyzer.py -f /path/to/capture.pcap -c /path/to/output.csv
+python3 meter/doqxtract.py -f /path/to/capture.pcap -c /path/to/output.csv
 ```
 
 ### Advanced Usage (Dataset Generation)
 To generate a robust dataset by splitting flows into 5-packet chunks:
 
 ```bash
-python3 meter/doqlyzer.py -f capture.pcap -c output.csv --max-packets 5
+python3 meter/doqxtract.py -f capture.pcap -c output.csv --max-packets 5
 ```
 
 ## Original Acknowledgement

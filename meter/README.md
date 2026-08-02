@@ -15,7 +15,7 @@ in a CSV file, the path of which should be specified by user.
 Example:
 
 ```bash
-python3 doqlyzer.py -n eth0 -c ./output.csv
+python3 doqxtract.py -n eth0 -c ./output.csv
 ```
 
 See `meter.flow.Flow.get_data` for the list of features extracted in this CSV file.
@@ -35,5 +35,5 @@ mkdir -p output/doq/
 mkdir -p output/ndoq/
 
 # Feature extraction
-python3 doqlyzer.py -n eth0 -s ./output/
+python3 doqxtract.py -n eth0 -s ./output/
 ```
